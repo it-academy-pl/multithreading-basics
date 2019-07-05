@@ -8,12 +8,25 @@ public class AccountClient implements Runnable {
         this.amount = amount;
     }
 
-    private void withdrawMoney() {
-
+    private synchronized void withdrawMoney() {
+        System.out.println("current thread is: " + Thread.currentThread().getName());
+        if(account.getBalance()>=amount) {
+            System.out.println("withdrawing money ");
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            account.withdraw(amount);
+        } else {
+            System.out.println("your account balance is too low: " + account.getBalance());
+        }
+        System.out.println("current balance is: " + amount);
     }
 
     @Override
     public void run() {
+
         withdrawMoney();
     }
 }

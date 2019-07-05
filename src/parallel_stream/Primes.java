@@ -13,7 +13,7 @@ public class Primes {
     }
     static long calculateNumberOfPrimes(long n) {
         return LongStream.rangeClosed(2, n)
-                //.parallel()
+                .parallel()
                 .mapToObj(BigInteger::valueOf)
                 .filter(i -> i.isProbablePrime(100))
                 .count();
